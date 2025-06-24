@@ -10,7 +10,7 @@ const Home: React.FC = () => {
   const [products, setProducts] = useState<Product[]>([]);
   const [search, setSearch] = useState('');
   const [barcode, setBarcode] = useState('');
-  const [category, setCategory] = useState('snacks');
+  const [category, setCategory] = useState('');
   const [sort, setSort] = useState('');
   const [page, setPage] = useState(1);
   const [loading, setLoading] = useState(false);
@@ -18,7 +18,6 @@ const Home: React.FC = () => {
   useEffect(() => {
     fetchProducts();
   }, [category, page]);
-
   const fetchProducts = async () => {
     try {
       setLoading(true);
@@ -84,23 +83,22 @@ const Home: React.FC = () => {
       default: return 0;
     }
   };
-
+  
   return (
-    <div className="max-w-screen-lg mx-auto min-w-screen min-h-screen ">
-      <h1 className="justify-center flex text-4xl border-b-1 py-4">Know your food.</h1>
-
-      <div className="flex flex-wrap justify-between gap-2 mb-6 border-b-1 py-3">
-        <div className='gap-2 flex'>
+    <div className="max-w-screen min-w-screen min-h-screen overflow-hidden">
+      <h1 className="justify-center flex text-4xl border-b-1 py-6">Know your food.</h1>
+      <div className="grid grid-cols-4 border-b-1 px-6">
+        <div className='flex justify-between border-r-1 px-6 py-2'>
           <Input placeholder="Search by name" value={search} onChange={e => setSearch(e.target.value)} className="decoration-none" />
           <Button onClick={searchByName}>Search</Button>
         </div>
-        <div className='gap-2 flex'>
+        <div className='flex justify-between border-r-1 px-6 py-2  '>
           <Input placeholder="Search by barcode" value={barcode} onChange={e => setBarcode(e.target.value)} className="decoration-none" />
           <Button onClick={searchByBarcode}>Lookup</Button>
         </div>
 
         <select
-          className="px-3 py-2 rounded-md focus:outline-none focus:ring-1 focus:ring-brown-500 w-48"
+          className="focus:outline-none focus:ring-1 focus:ring-brown-500 border-r-1 p-3"
           value={category}
           onChange={(e) => setCategory(e.target.value)}
         > 
@@ -110,7 +108,7 @@ const Home: React.FC = () => {
         </select>
 
         <select
-          className="border border-gray-300 px-3 py-2 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 w-48"
+          className="focus:outline-none focus:ring-1 focus:ring-brown-500 p-3"
           value={sort}
           onChange={(e) => setSort(e.target.value)}
         >
@@ -124,18 +122,18 @@ const Home: React.FC = () => {
 
       {
         loading ? (
-          <div className="flex justify-center items-center h-40">
+          <div className="flex justify-center items-center h-40 ">
             <LoaderCircle className="animate-spin text-gray-600" size={36} />
           </div>
         ) : (
-          <div className="grid grid-cols-4">
+          <div className="grid grid-cols-6 mt-2 ">
             {products.sort(handleSort).map(product => (
-              <Card key={product.id} className="h-90">
-                <CardContent className="">
-                  <img src={product.image_url} alt={product.product_name} className="object-contain h-32" />
-                  <p className="">Nutrition Grade: {product.nutrition_grade_fr || 'N/A'}</p>
-                  <h2 className="">{product.product_name}</h2>
-                  <p className="">Ingredients: {product.ingredients_text || 'N/A'}</p>
+              <Card key={product.id} className="h-80 ">
+                <CardContent className="flex flex-col h-full">
+                  <img src={product.image_url} alt={product.product_name} className="object-contain h-15 p-3" />
+                  <p className="border-b-1 px-3 py-1">Nutrition Grade: {product.nutrition_grade_fr || 'N/A'}</p>
+                  <h2 className="border-b-1 px-3 font-bold text-xl">{product.product_name || 'N/A'}</h2>
+                  <p className=" p-3">Ingredients: {product.ingredients_text || 'N/A'}</p>
                 </CardContent>
               </Card>
             ))}

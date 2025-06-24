@@ -4,9 +4,14 @@
     src: url('./public/fonts/RONDAL-REGULAR.OTF') format('opentype'),
     url('./public/fonts/RONDAL-SEMIBOLD.OTF') format('opentype'),
 }
+
 body {
     background-color: #eae6da;
     color: #26201E;
     font-family: 'helvetica';
-    text-decoration: none;
+    text-decoration: none;   
+    overflow-x:hidden;
+}
+.scroller {
+    scrollbar-color:#ded6c2, #ded6c2 ;
 }
