@@ -3,7 +3,7 @@ import { Input } from '../components/ui/Input'
 import { Card, CardContent } from '../components/ui/Card';
 import { Button } from '../components/ui/Button';
 import { LoaderCircle } from 'lucide-react';
-import type {Product}  from '../types/Product';
+import type { Product } from '../types/Product';
 import { fetchProductsByCategory, searchProductsByName, getProductByBarcode } from '../apis/OpenFoodApi';
 
 const Home: React.FC = () => {
@@ -34,7 +34,7 @@ const Home: React.FC = () => {
       }));
       setProducts(prev => [...prev, ...fetchedProducts]);
     } catch (err) {
-      console.error(err , "error in fetching products");
+      console.error(err, "error in fetching products");
     } finally {
       setLoading(false);
     }
@@ -86,21 +86,24 @@ const Home: React.FC = () => {
   };
 
   return (
-    <div className="p-6 max-w-screen-lg mx-auto">
-      <h1 className="text-3xl font-bold mb-4">Food Product Explorer</h1>
+    <div className="max-w-screen-lg mx-auto min-w-screen min-h-screen ">
+      <h1 className="justify-center flex text-4xl border-b-1 py-4">Know your food.</h1>
 
-      <div className="flex flex-wrap gap-2 mb-6">
-        <Input placeholder="Search by name" value={search} onChange={e => setSearch(e.target.value)} className="w-60" />
-        <Button onClick={searchByName}>Search</Button>
-
-        <Input placeholder="Search by barcode" value={barcode} onChange={e => setBarcode(e.target.value)} className="w-60" />
-        <Button onClick={searchByBarcode}>Lookup</Button>
+      <div className="flex flex-wrap justify-between gap-2 mb-6 border-b-1 py-3">
+        <div className='gap-2 flex'>
+          <Input placeholder="Search by name" value={search} onChange={e => setSearch(e.target.value)} className="decoration-none" />
+          <Button onClick={searchByName}>Search</Button>
+        </div>
+        <div className='gap-2 flex'>
+          <Input placeholder="Search by barcode" value={barcode} onChange={e => setBarcode(e.target.value)} className="decoration-none" />
+          <Button onClick={searchByBarcode}>Lookup</Button>
+        </div>
 
         <select
-          className="border border-gray-300 px-3 py-2 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 w-48"
+          className="px-3 py-2 rounded-md focus:outline-none focus:ring-1 focus:ring-brown-500 w-48"
           value={category}
           onChange={(e) => setCategory(e.target.value)}
-        >
+        > 
           <option value="snacks">Snacks</option>
           <option value="beverages">Beverages</option>
           <option value="dairies">Dairies</option>
@@ -119,24 +122,26 @@ const Home: React.FC = () => {
         </select>
       </div>
 
-      {loading ? (
-        <div className="flex justify-center items-center h-40">
-          <LoaderCircle className="animate-spin text-gray-600" size={36} />
-        </div>
-      ) : (
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-          {products.sort(handleSort).map(product => (
-            <Card key={product.id} className="shadow-md">
-              <CardContent className="p-4">
-                <img src={product.image_url} alt={product.product_name} className="h-32 object-contain mx-auto mb-2" />
-                <h2 className="font-semibold text-lg text-center">{product.product_name}</h2>
-                <p className="text-sm text-gray-700 mt-1">Ingredients: {product.ingredients_text || 'N/A'}</p>
-                <p className="text-sm text-gray-700">Nutrition Grade: {product.nutrition_grade_fr || 'N/A'}</p>
-              </CardContent>
-            </Card>
-          ))}
-        </div>
-      )}
+      {
+        loading ? (
+          <div className="flex justify-center items-center h-40">
+            <LoaderCircle className="animate-spin text-gray-600" size={36} />
+          </div>
+        ) : (
+          <div className="grid grid-cols-4">
+            {products.sort(handleSort).map(product => (
+              <Card key={product.id} className="h-90">
+                <CardContent className="">
+                  <img src={product.image_url} alt={product.product_name} className="object-contain h-32" />
+                  <p className="">Nutrition Grade: {product.nutrition_grade_fr || 'N/A'}</p>
+                  <h2 className="">{product.product_name}</h2>
+                  <p className="">Ingredients: {product.ingredients_text || 'N/A'}</p>
+                </CardContent>
+              </Card>
+            ))}
+          </div>
+        )
+      }
 
       <div className="mt-6 flex justify-center">
         <Button onClick={() => setPage(prev => prev + 1)} disabled={loading}>
@@ -144,7 +149,7 @@ const Home: React.FC = () => {
           Load More
         </Button>
       </div>
-    </div>
+    </div >
   );
 };
 
