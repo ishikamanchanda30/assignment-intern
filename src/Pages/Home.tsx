@@ -4,7 +4,7 @@ import { Card, CardContent } from '../components/ui/Card';
 import { Button } from '../components/ui/Button';
 import { LoaderCircle } from 'lucide-react';
 import type { Product } from '../types/Product';
-import { fetchProductsByCategory, searchProductsByName, getProductByBarcode } from '../apis/OpenFoodApi';
+import { fetchProductsByCategory, searchProductsByName, getProductByBarcode, } from '../apis/OpenFoodApi';
 
 const Home: React.FC = () => {
   const [products, setProducts] = useState<Product[]>([]);
@@ -18,6 +18,7 @@ const Home: React.FC = () => {
   useEffect(() => {
     fetchProducts();
   }, [category, page]);
+
   const fetchProducts = async () => {
     try {
       setLoading(true);
@@ -83,7 +84,7 @@ const Home: React.FC = () => {
       default: return 0;
     }
   };
-  
+
   return (
     <div className="max-w-screen min-w-screen min-h-screen overflow-hidden">
       <h1 className="justify-center flex text-4xl border-b-1 py-6">Know your food.</h1>
@@ -101,12 +102,11 @@ const Home: React.FC = () => {
           className="focus:outline-none focus:ring-1 focus:ring-brown-500 border-r-1 p-3"
           value={category}
           onChange={(e) => setCategory(e.target.value)}
-        > 
+        >
           <option value="snacks">Snacks</option>
           <option value="beverages">Beverages</option>
           <option value="dairies">Dairies</option>
         </select>
-
         <select
           className="focus:outline-none focus:ring-1 focus:ring-brown-500 p-3"
           value={sort}
@@ -133,7 +133,7 @@ const Home: React.FC = () => {
                   <img src={product.image_url} alt={product.product_name} className="object-contain h-15 p-3" />
                   <p className="border-b-1 px-3 py-1">Nutrition Grade: {product.nutrition_grade_fr || 'N/A'}</p>
                   <h2 className="border-b-1 px-3 font-bold text-xl">{product.product_name || 'N/A'}</h2>
-                  <p className=" p-3">Ingredients: {product.ingredients_text || 'N/A'}</p>
+                  <p className="p-3 opacity-60 text-xs">Ingredients: {product.ingredients_text || 'N/A'}</p>
                 </CardContent>
               </Card>
             ))}

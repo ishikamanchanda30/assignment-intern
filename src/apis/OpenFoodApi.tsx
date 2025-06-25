@@ -1,10 +1,6 @@
 import axios from "axios";
 const base_url = `https://world.openfoodfacts.org/`;
-export const fetchAllProducts = async() => {
-  const url = base_url;
-  const res = await axios.get(url);
-  return res.data.products;
-}
+
 export const fetchProductsByCategory = async(category:string , page: number) => {
   const url = base_url + `category/${category}.json`;
   const res = await axios.get(url);
